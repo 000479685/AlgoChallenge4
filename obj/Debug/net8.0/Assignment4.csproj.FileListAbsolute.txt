@@ -1,0 +1,14 @@
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\bin\Debug\net8.0\Assignment4.exe
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\bin\Debug\net8.0\Assignment4.deps.json
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\bin\Debug\net8.0\Assignment4.runtimeconfig.json
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\bin\Debug\net8.0\Assignment4.dll
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\bin\Debug\net8.0\Assignment4.pdb
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.AssemblyInfoInputs.cache
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.AssemblyInfo.cs
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.csproj.CoreCompileInputs.cache
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.dll
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\refint\Assignment4.dll
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.pdb
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.genruntimeconfig.cache
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\ref\Assignment4.dll
