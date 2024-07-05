@@ -86,15 +86,15 @@ namespace Program
 
     public class LRUCache
     {
-        private struct LRUObject
+        private class LRUObject
         {
-            public int key { get; }
-            public int value { get; set; }
+            public int Key { get; }
+            public int Value { get; set; }
 
             public LRUObject(int key, int value)
             {
-                this.key = key;
-                this.value = value;
+                this.Key = key;
+                this.Value = value;
             }
         }
 
@@ -110,29 +110,24 @@ namespace Program
 
         public int Get(int key)
         {
-            if(cacheDict.ContainsKey(key))
-            {
-                LinkedListNode<LRUObject> temp = cacheDict[key];
-                
-                cacheLL.Remove(temp);
-                cacheLL.AddFirst(temp);
+            if(cacheDict.TryGetValue(key, out LinkedListNode<LRUObject> targetNode))
+            {                                
+                cacheLL.Remove(targetNode);
+                cacheLL.AddFirst(targetNode);
 
-                return temp.Value.value;
+                return targetNode.Value.Value;
             }
             return -1;
         }
 
         public void Put(int key, int value)
         {
-            if (cacheDict.ContainsKey(key))
+            if (cacheDict.TryGetValue(key, out LinkedListNode<LRUObject> targetNode))
             {
-                LinkedListNode<LRUObject> temp = cacheDict[key];
-                LinkedListNode<LRUObject> bruteForce = new LinkedListNode<LRUObject>(new LRUObject(key, value));
-
-                cacheDict[key] = bruteForce;
-
-                cacheLL.Remove(temp);
-                cacheLL.AddFirst(bruteForce);
+                targetNode.Value.Value = value;
+                
+                cacheLL.Remove(targetNode);
+                cacheLL.AddFirst(targetNode);
 
                 return;
             }
@@ -140,7 +135,7 @@ namespace Program
             if(cacheLL.Count >= cap)
             {
                 LRUObject lastNode = cacheLL.Last();
-                cacheDict.Remove(lastNode.key);
+                cacheDict.Remove(lastNode.Key);
                 cacheLL.RemoveLast();
             }
 
