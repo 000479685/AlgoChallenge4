@@ -125,23 +125,23 @@ namespace Program
             if (cacheDict.TryGetValue(key, out LinkedListNode<LRUObject> targetNode))
             {
                 targetNode.Value.Value = value;
-                
+
                 cacheLL.Remove(targetNode);
-                cacheLL.AddFirst(targetNode);
-
-                return;
+                cacheLL.AddFirst(targetNode);                
             }
-
-            if(cacheLL.Count >= cap)
+            else
             {
-                LRUObject lastNode = cacheLL.Last();
-                cacheDict.Remove(lastNode.Key);
-                cacheLL.RemoveLast();
-            }
+                if (cacheLL.Count >= cap)
+                {
+                    LinkedListNode<LRUObject> lastNode = cacheLL.Last;
+                    cacheDict.Remove(lastNode.Value.Key);
+                    cacheLL.RemoveLast();
+                }
 
-            LinkedListNode<LRUObject> newNode = new LinkedListNode<LRUObject>(new LRUObject(key, value));
-            cacheDict.Add(key, newNode);
-            cacheLL.AddFirst(newNode);
+                LinkedListNode<LRUObject> newNode = new LinkedListNode<LRUObject>(new LRUObject(key, value));
+                cacheDict.Add(key, newNode);
+                cacheLL.AddFirst(newNode);
+            }
         }
     }
 
