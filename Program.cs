@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 
+using System.Collections.Generic;
+
 namespace Program
 {
     public class MyStack
@@ -82,82 +84,69 @@ namespace Program
         }
     }
 
-    public struct LruObject
-    {
-        public int key;
-        public int value;
-        public LruObject(int key, int value)
-        {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
     public class LRUCache
     {
-        Queue<LruObject> lruQueue;
-        int cap;        
-        int filledElems;
+        private struct LRUObject
+        {
+            public int key { get; }
+            public int value { get; set; }
+
+            public LRUObject(int key, int value)
+            {
+                this.key = key;
+                this.value = value;
+            }
+        }
+
+        int cap;
+        Dictionary<int, LinkedListNode<LRUObject>> cacheDict;
+        LinkedList<LRUObject> cacheLL;
         public LRUCache(int capacity)
-        {            
-            filledElems = 0;
+        {
             cap = capacity;
-            lruQueue = new Queue<LruObject>();
+            cacheDict = new Dictionary<int, LinkedListNode<LRUObject>>(capacity);
+            cacheLL = new LinkedList<LRUObject>();
         }
 
         public int Get(int key)
         {
-            int keypos = Array.IndexOf(lruQueue.Select(LruObject => LruObject.key).ToArray(), key);
-            if (keypos > -1)
+            if(cacheDict.ContainsKey(key))
             {
-                int temp = 0;
-                for (int i = 0; i <= lruQueue.Count(); i++)
-                {                    
-                    if(i == keypos)
-                    {
-                        temp = lruQueue.Dequeue().value;
-                        continue;
-                    }                    
-                    lruQueue.Enqueue(lruQueue.Dequeue());
-                }
-                lruQueue.Enqueue(new LruObject(key, temp));
-                return temp;
+                LinkedListNode<LRUObject> temp = cacheDict[key];
+                
+                cacheLL.Remove(temp);
+                cacheLL.AddFirst(temp);
+
+                return temp.Value.value;
             }
             return -1;
-        }        
+        }
 
         public void Put(int key, int value)
         {
-            int keypos = Array.IndexOf(lruQueue.Select(LruObject => LruObject.key).ToArray(), key);
-            if (keypos > -1)
+            if (cacheDict.ContainsKey(key))
             {
-                //LruObject temp = new LruObject(0,0);
-                //for (int i = 0; i <= lruQueue.Count(); i++)
-                //{
-                //    if (i == keypos)
-                //    {
-                //        temp = lruQueue.Dequeue();
-                //        continue;
-                //    }
-                //    lruQueue.Enqueue(lruQueue.Dequeue());
-                //}                
-                //temp.value = value;
-                //lruQueue.Enqueue(temp);
+                LinkedListNode<LRUObject> temp = cacheDict[key];
+                LinkedListNode<LRUObject> bruteForce = new LinkedListNode<LRUObject>(new LRUObject(key, value));
 
-                lruQueue = new Queue<LruObject>(lruQueue.Where(LruObject => LruObject.key != key).ToArray());
-                lruQueue.Enqueue(new LruObject(key, value));
+                cacheDict[key] = bruteForce;
+
+                cacheLL.Remove(temp);
+                cacheLL.AddFirst(bruteForce);
+
                 return;
             }
 
-            if (filledElems < cap)
+            if(cacheLL.Count >= cap)
             {
-                lruQueue.Enqueue(new LruObject(key, value));
-                filledElems++;
-                return;
+                LRUObject lastNode = cacheLL.Last();
+                cacheDict.Remove(lastNode.key);
+                cacheLL.RemoveLast();
             }
 
-            lruQueue.Dequeue();
-            lruQueue.Enqueue(new LruObject(key, value));
+            LinkedListNode<LRUObject> newNode = new LinkedListNode<LRUObject>(new LRUObject(key, value));
+            cacheDict.Add(key, newNode);
+            cacheLL.AddFirst(newNode);
         }
     }
 
@@ -190,43 +179,21 @@ namespace Program
             //Console.WriteLine($"{myQueue.Pop()} {myQueue.Peek()} {myQueue.Empty()}");
 
             Console.WriteLine("'----------------'");
-            LRUCache lru = new LRUCache(3);
+            LRUCache lru = new LRUCache(2);
 
-            lru.Put(1, 1);
+            lru.Put(2, 1);
             lru.Put(2, 2);
-            lru.Put(3, 3);
-            lru.Put(4, 4);
-            Console.WriteLine(lru.Get(4));
-            Console.WriteLine(lru.Get(3));
             Console.WriteLine(lru.Get(2));
-            Console.WriteLine(lru.Get(1));
-            lru.Put(5, 5);
-            Console.WriteLine(lru.Get(1));
+            lru.Put(1, 1);
+            lru.Put(4, 1);
             Console.WriteLine(lru.Get(2));
-            Console.WriteLine(lru.Get(3));
-            Console.WriteLine(lru.Get(4));
-            Console.WriteLine(lru.Get(5));
+            
 
 
 
 
 
-            Console.WriteLine("-------------TESTING------------");
-
-            Queue<LruObject> queue = new Queue<LruObject>();
-            queue.Enqueue(new LruObject(1,1));
-            queue.Enqueue(new LruObject(2,2));
-            queue.Enqueue(new LruObject(3,3));
-            queue.Enqueue(new LruObject(4,4));
-
-            Console.WriteLine(String.Join(" ", queue.Select(LruObject => LruObject.key).ToArray()));
-            Console.WriteLine(Array.IndexOf(queue.Select(LruObject => LruObject.key).ToArray(), 3));
-            Console.WriteLine(String.Join(" ", queue.Select(LruObject => LruObject.key != 3).ToArray()));
-            Console.WriteLine(String.Join(" ", queue.Where(LruObject => LruObject.key != 3).ToArray()));
-
-            List<int> numbers2 = [15, 14, 11, 13, 19, 18, 16, 17, 12, 10];
-            IEnumerable<int> largeNumbersQuery = numbers2.Where(c => c > 15);
-            int[] test = largeNumbersQuery.ToArray();
+            Console.WriteLine("-------------TESTING------------");            
         }
     }
 }
