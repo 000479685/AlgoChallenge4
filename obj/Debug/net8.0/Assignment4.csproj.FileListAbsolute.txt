@@ -12,3 +12,4 @@ D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignm
 D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.pdb
 D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.genruntimeconfig.cache
 D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\ref\Assignment4.dll
+D:\Projects\University stuff\Programing projects\C#\leetcode\Assignment4\Assignment4\obj\Debug\net8.0\Assignment4.sourcelink.json
